@@ -1,0 +1,35 @@
+
+
+
+
+# Ignore config directory
+config/
+
+
+
+
+
+
+
+
+# Ignore binary executables
+*.exe
+*.dll
+*.so
+
+# Ignore build files
+/build/
+/bin/
+
+# Ignore Go dependency directories
+/vendor/
+/go.sum
+
+# Ignore IDE or editor specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# Ignore operating system specific files
+.DS_Store
+Thumbs.db
