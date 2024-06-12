@@ -6,12 +6,16 @@ import (
 	"handsOnGO/dto"
 	"handsOnGO/service"
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
-func GerPersonDetails(c *gin.Context) {
-	fmt.Println("sohel")
+func GetAlllPersonDetails(c *gin.Context) {
+	persons, err := service.GetAllPersons(c)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, persons)
 }
 
 func CreatePerson(c *gin.Context) {
