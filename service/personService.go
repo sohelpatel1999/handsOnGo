@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"handsOnGO/database"
 	"handsOnGO/dto"
-
-	// "handsOnGO/config"
 	"cloud.google.com/go/firestore"
 )
 
@@ -41,4 +39,23 @@ func CreatePerson(ctx context.Context, person dto.Person) (*dto.Person, *firesto
 		return nil, nil, err
 	}
 	return &person, response, nil
+}
+
+func GetAllPersons(ctx context.Context) ([]dto.Person, error) {
+	var persons []dto.Person
+	documents, err := database.Db.Collection(CollectionName).Documents(ctx).GetAll()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get documents: %v", err)
+	}
+
+	// Iterate over the documents
+	for _, doc := range documents {
+		// Unmarshal the document data into a Person struct
+		var person dto.Person
+		if err := doc.DataTo(&person); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal document: %v", err)
+		}
+		persons = append(persons, person)
+	}
+	return persons, nil
 }
