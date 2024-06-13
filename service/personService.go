@@ -154,3 +154,30 @@ func UpdatePersonDetailsById(ctx context.Context, person dto.Person, ID string) 
 	// Return the updated fields
 	return &updateFields, nil
 }
+
+func DeletePersonDetailsById(ctx context.Context, ID string) error {
+	// Get the document by its ID
+	docRef := database.Db.Collection(CollectionName).Doc(ID)
+	snapshot, err := docRef.Get(ctx)
+	if err != nil {
+		// Return the error if any occurs while getting the document
+		return errors.New("Document not Found")
+	}
+
+	// Check if the document exists
+	if !snapshot.Exists() {
+		// Return a "not found" error if the document doesn't exist
+		return errors.New("not found")
+
+	}
+
+	// Delete the document
+	_, err = docRef.Delete(ctx)
+	if err != nil {
+		// Return the error if any occurs while deleting the document
+		return err
+	}
+
+	// No error occurred, return nil
+	return nil
+}

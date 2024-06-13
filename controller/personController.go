@@ -61,11 +61,24 @@ func UpdatePersonDetailsById(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	personresponse, err := service.UpdatePersonDetailsById(context.Background(),person, ID)
+	personresponse, err := service.UpdatePersonDetailsById(context.Background(), person, ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, personresponse)
+
+}
+
+func DeletePersonDetailsById(c *gin.Context) {
+	ID := c.Query("id")
+	fmt.Println(ID)
+
+	err := service.DeletePersonDetailsById(context.Background(), ID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"Success": "document deleted successfully"})
 
 }

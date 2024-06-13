@@ -13,6 +13,6 @@ func routes(router *gin.Engine) {
 		api.POST("/", controller.CreatePerson)
 		api.GET("/details", controller.GetPersonDetailsById)
 		api.PUT("/details", controller.UpdatePersonDetailsById)
-		// api.POST("/", controller.CreatePerson)
+		api.DELETE("/details", controller.DeletePersonDetailsById)
 	}
 }
